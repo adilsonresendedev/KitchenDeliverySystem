@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Git\KitchenDeliverySystem\src\2 - Application\KitchenDeliverySystem.Application\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Git\KitchenDeliverySystem\src\2 - Application\KitchenDeliverySystem.Application\.editorconfig" />
+  </ItemGroup>
+
 </Project>
