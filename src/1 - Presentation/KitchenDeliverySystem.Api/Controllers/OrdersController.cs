@@ -44,7 +44,7 @@ namespace KitchenDeliverySystem.Api.Controllers
 
         // GET /orders/{id}/items - Retrieves items of a specific order
         [HttpGet("{id:int}/items")]
-        public async Task<IActionResult<List<OrderItemDto>>> GetOrderItems(int id)
+        public async Task<ActionResult<List<OrderItemDto>>> GetOrderItems(int id)
         {
             return Ok();
         }

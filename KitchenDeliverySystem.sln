@@ -35,11 +35,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenDeliverySystem.Cross
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenDeliverySystem.Dto", "src\5 - CrossCutting\KitchenDeliverySystem.Dto\KitchenDeliverySystem.Dto.csproj", "{5A0E3C2E-E27D-40E7-8E59-D3B886236192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenDeliverySystem.Test.Integration", "test\1- Integration\KitchenDeliverySystem.Tests.Integration\KitchenDeliverySystem.Test.Integration.csproj", "{E827CC77-510D-4D49-AE03-D14E712CBA9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenDeliverySystem.Test.Integration", "test\1- Integration\KitchenDeliverySystem.Tests.Integration\KitchenDeliverySystem.Test.Integration.csproj", "{E827CC77-510D-4D49-AE03-D14E712CBA9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenDeliverySystem.Test.Shared", "test\2 - Shared\KitchenDeliverySystem.Tests.Shared\KitchenDeliverySystem.Test.Shared.csproj", "{33DEE9CA-1B1E-4747-9881-D6F4179B0DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenDeliverySystem.Test.Shared", "test\2 - Shared\KitchenDeliverySystem.Tests.Shared\KitchenDeliverySystem.Test.Shared.csproj", "{33DEE9CA-1B1E-4747-9881-D6F4179B0DBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenDeliverySystem.Test.Unit", "KitchenDeliverySystem.Tests.Unit\KitchenDeliverySystem.Test.Unit.csproj", "{5BEFFB0A-4BAE-47F0-AF1A-C5CFFE4DEDF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenDeliverySystem.Test.Unit", "KitchenDeliverySystem.Tests.Unit\KitchenDeliverySystem.Test.Unit.csproj", "{5BEFFB0A-4BAE-47F0-AF1A-C5CFFE4DEDF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCases", "UseCases", "{93375BC8-049B-4943-8814-53BF1FB57F6A}"
 EndProject
@@ -48,6 +48,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{5C1AE52E-3853-4F86-AF48-213AEEA1D7F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserRegisterUseCase", "UserRegisterUseCase", "{33D6D077-C6CE-477D-9799-5BB30792C157}"
+	ProjectSection(SolutionItems) = preProject
+		IUserRegisterUseCase.cs = IUserRegisterUseCase.cs
+		UserRegisterUseCase.cs = UserRegisterUseCase.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserLoginUseCase", "UserLoginUseCase", "{FCC18877-F603-4283-90D9-2F64DF176632}"
 	ProjectSection(SolutionItems) = preProject
@@ -67,11 +71,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderUpdateUseCase", "Order
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderGetItemUseCase", "OrderGetItemUseCase", "{A9F8D52F-24A1-4AE8-A171-4325348BEB88}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderInsertItemUseCase", "OrderInsertItemUseCase", "{6FFEBEBD-6ED0-46F5-979D-A46B9FA023C7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderItemInsertUseCase", "OrderItemInsertUseCase", "{6FFEBEBD-6ED0-46F5-979D-A46B9FA023C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderUpdateItemUseCase", "OrderUpdateItemUseCase", "{38022CC1-16A1-4D49-B52B-CFF0FA5C60E1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderDeleteItemUseCase", "OrderDeleteItemUseCase", "{F0FEA534-A1A2-4156-BEA5-EE183A56847B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderItemDeleteUseCase", "OrderItemDeleteUseCase", "{F0FEA534-A1A2-4156-BEA5-EE183A56847B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

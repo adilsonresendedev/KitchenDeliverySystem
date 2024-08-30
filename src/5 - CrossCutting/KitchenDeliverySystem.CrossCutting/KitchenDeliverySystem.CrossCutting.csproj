@@ -12,4 +12,8 @@
     <Folder Include="Options\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KitchenDeliverySystem.Dto\KitchenDeliverySystem.Dto.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,4 @@
 ﻿using KitchenDeliverySystem.Domain.Enums;
-using KitchenDeliverySystem.Domain.Validation;
 
 namespace KitchenDeliverySystem.Domain.Entities
 {
@@ -14,14 +13,17 @@ namespace KitchenDeliverySystem.Domain.Entities
 
         public Order(string customerName, OrderStatus orderStatus)
         {          
-            ValidateOrder(customerName, orderStatus);
-            this.OrderTime = DateTime.UtcNow;
+            OrderTime = DateTime.UtcNow;
+            CustomerName = customerName;
+            OrderStatus = orderStatus;
             Items = new List<OrderItem>();
         }
 
         public void Update(string customerName, List<OrderItem> items, OrderStatus orderStatus)
         {
-            ValidateOrder(customerName,  orderStatus);
+            CustomerName = customerName;
+            OrderStatus = orderStatus;
+            Items = items;
         }
 
         public void AddItem(OrderItem orderItem)
@@ -32,16 +34,6 @@ namespace KitchenDeliverySystem.Domain.Entities
         public void RemoveItem(OrderItem orderItem)
         {
             Items.Remove(orderItem);
-        }
-
-        public void ValidateOrder(string customerName, OrderStatus orderStatus)
-        {
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(customerName), ValidationConstants.CustomerNameIsInvalid);
-
-            DomainExceptionValidation.When(customerName.Length > 30, ValidationConstants.CustomerNameTooLong);
-
-            CustomerName = customerName;
-            OrderStatus = orderStatus;
         }
     }
 }
