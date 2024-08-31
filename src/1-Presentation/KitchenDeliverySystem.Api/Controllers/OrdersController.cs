@@ -1,69 +1,105 @@
-﻿using KitchenDeliverySystem.Dto.Order;
+﻿using KitchenDeliverySystem.Api.Controllers.Base;
+using KitchenDeliverySystem.Api.Validation;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderCreate;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderDelete;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderGet;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderSearch;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderUpdate;
+using KitchenDeliverySystem.Dto.Order;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KitchenDeliverySystem.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseController
     {
-        // GET /orders - Retrieves a list of orders
-        [HttpGet]
-        public async Task<ActionResult<List<UpdateOrderDto>>> GetOrders()
+        private readonly ICreateOrderUseCase _createOrderUseCase;
+        private readonly IDeleteOrderUseCase _deleteOrderUseCase;
+        private readonly IGetOrderUseCase _getOrderUseCase;
+        private readonly IUpdateOrderUseCase _updateOrderUseCase;
+        private readonly ISearchOrderUseCase _searchOrderUseCase;
+
+        public OrdersController(
+            ICreateOrderUseCase createOrderUseCase,
+            IDeleteOrderUseCase deleteOrderUseCase,
+            IGetOrderUseCase getOrderUseCase,
+            IUpdateOrderUseCase updateOrderUseCase,
+            ISearchOrderUseCase searchOrderUseCase)
         {
-            return Ok();
+            _createOrderUseCase = createOrderUseCase;
+            _deleteOrderUseCase = deleteOrderUseCase;
+            _getOrderUseCase = getOrderUseCase;
+            _updateOrderUseCase = updateOrderUseCase;
+            _searchOrderUseCase = searchOrderUseCase;
         }
 
-        // GET /orders/{id} - Retrieves a specific order by ID
+        [HttpGet]
+        public async Task<ActionResult<List<UpdateOrderDto>>> GetOrders([FromQuery] OrderFilterDto orderFilterDto)
+        {
+            var result = await _searchOrderUseCase.ExecuteAsync(orderFilterDto);
+            return HandleErrorOrResult(result);
+        }
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<UpdateOrderDto>> GetOrderById(int id)
         {
-            return Ok();
+            var result = await _getOrderUseCase.ExecuteAsync(id);
+            return HandleErrorOrResult(result);
         }
 
-        // POST /orders - Adds a new order
         [HttpPost]
-        public async Task<ActionResult<UpdateOrderDto>> CreateOrder([FromBody] UpdateOrderDto createOrderDto)
+        [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] CreateOderDto createOrderDto)
         {
-            return Ok();
+            var createOrderValidator = new CreateOrderDtoValidator();
+            var validationResult = createOrderValidator.Validate(createOrderDto);
+            if (!validationResult.IsValid)
+                return UnprocessableEntity(validationResult);
+
+            var result = await _createOrderUseCase.ExecuteAsync(createOrderDto);
+            return HandleErrorOrResult(result);
         }
 
-        // PUT /orders/{id} - Updates an existing order
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderDto updateOrderDto)
         {
-            return Ok();
+            var createOrderValidator = new UpdateOrderDtoValidator();
+            var validationResult = createOrderValidator.Validate(updateOrderDto);
+            if (!validationResult.IsValid)
+                return UnprocessableEntity(validationResult);
+
+            var result = await _updateOrderUseCase.ExecuteAsync(id, updateOrderDto);
+            return HandleErrorOrResult(result);
         }
 
-        // DELETE /orders/{id} - Removes an order
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            return Ok();
+            var result = await _deleteOrderUseCase.ExecuteAsync(id);
+            return HandleErrorOrResult(result);
         }
 
-        // GET /orders/{id}/items - Retrieves items of a specific order
         [HttpGet("{id:int}/items")]
         public async Task<ActionResult<List<OrderItemDto>>> GetOrderItems(int id)
         {
             return Ok();
         }
 
-        // POST /orders/{id}/items - Adds a new item to an order
         [HttpPost("{id:int}/items")]
         public async Task<ActionResult<OrderItemDto>> AddOrderItem(int id, [FromBody] CreateOrderItemDto addOrderItemDto)
         {
             return Ok();
         }
 
-        // PUT /orders/{id}/items/{itemId} - Updates an item in an order
         [HttpPut("{id:int}/items/{itemId:int}")]
         public async Task<IActionResult> UpdateOrderItem(int id, int itemId, [FromBody] CreateOrderItemDto updateOrderItemDto)
         {
             return Ok();
         }
 
-        // DELETE /orders/{id}/items/{itemId} - Removes an item from an order
         [HttpDelete("{id:int}/items/{itemId:int}")]
         public async Task<IActionResult> DeleteOrderItem(int id, int itemId)
         {

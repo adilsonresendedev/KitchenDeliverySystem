@@ -1,7 +1,9 @@
-﻿namespace KitchenDeliverySystem.Dto.Order
+﻿using KitchenDeliverySystem.Domain.Enums;
+
+namespace KitchenDeliverySystem.Dto.Order
 {
     public class UpdateOrderDto : CreateOderDto
     {
-        public int Id { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }

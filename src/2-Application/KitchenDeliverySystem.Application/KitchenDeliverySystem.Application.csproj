@@ -15,16 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\OrderItem\OrderItemDelete\" />
-    <Folder Include="UseCases\OrderItem\OrderItemCreate\" />
-    <Folder Include="UseCases\Order\OrderSearch\" />
-    <Folder Include="UseCases\Order\OrderGet\" />
-    <Folder Include="UseCases\Order\OrderUpdate\" />
-    <Folder Include="UseCases\Order\OrderDelete\" />
-    <Folder Include="UseCases\Order\OrderCreate\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ErrorOr" Version="2.0.1" />
   </ItemGroup>
 

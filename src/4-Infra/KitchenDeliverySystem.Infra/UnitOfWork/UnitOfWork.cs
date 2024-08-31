@@ -1,7 +1,5 @@
-﻿using KitchenDeliverySystem.Domain.Repositories;
-using KitchenDeliverySystem.Domain.UnitOfWork;
+﻿using KitchenDeliverySystem.Domain.UnitOfWork;
 using KitchenDeliverySystem.Infra.Context;
-using KitchenDeliverySystem.Infra.Persistence;
 
 namespace KitchenDeliverySystem.Infra.UnitOfWork
 {
@@ -17,6 +15,7 @@ namespace KitchenDeliverySystem.Infra.UnitOfWork
 
         public async Task CommitAsync()
         {
+            await _appDbContext.SaveChangesAsync();
             await _appDbContext.Database.CommitTransactionAsync();
         }
 

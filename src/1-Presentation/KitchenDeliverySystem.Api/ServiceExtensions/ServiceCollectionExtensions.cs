@@ -1,14 +1,19 @@
 ﻿using KitchenDeliverySystem.Application.UseCases;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderCreate;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderDelete;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderGet;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderSearch;
+using KitchenDeliverySystem.Application.UseCases.Order.OrderUpdate;
 using KitchenDeliverySystem.Application.UseCases.User.UserInsert;
 using KitchenDeliverySystem.Application.UseCases.User.UserLogin;
 using KitchenDeliverySystem.CrossCutting.Options;
 using KitchenDeliverySystem.Domain.Repositories;
 using KitchenDeliverySystem.Domain.UnitOfWork;
 using KitchenDeliverySystem.Infra.Context;
+using KitchenDeliverySystem.Infra.Mappers;
 using KitchenDeliverySystem.Infra.Persistence;
 using KitchenDeliverySystem.Infra.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace KitchenDeliverySystem.Api.ServiceExtensions
 {
@@ -18,6 +23,11 @@ namespace KitchenDeliverySystem.Api.ServiceExtensions
         {
             services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
             services.AddScoped<IUserLoginUseCase, UserLoginUseCase>();
+            services.AddScoped<ICreateOrderUseCase, CreateOrderUseCase>();
+            services.AddScoped<IDeleteOrderUseCase, DeleteOrderUseCase>();
+            services.AddScoped<IGetOrderUseCase, GetOrderUseCase>();
+            services.AddScoped<IUpdateOrderUseCase, UpdateOrderUseCase>();
+            services.AddScoped<ISearchOrderUseCase, SearchOrderUseCase>();
 
             return services;
         }
@@ -41,6 +51,17 @@ namespace KitchenDeliverySystem.Api.ServiceExtensions
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            return services;
+        }
+
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(
+                typeof(UserProfile).Assembly,
+                typeof(OrderProfile).Assembly,
+                typeof(OrderItemProfile).Assembly,
+                typeof(OrderFilterProfile).Assembly);
+
             return services;
         }
 

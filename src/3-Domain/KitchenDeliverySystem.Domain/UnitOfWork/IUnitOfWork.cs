@@ -1,6 +1,4 @@
-﻿using KitchenDeliverySystem.Domain.Repositories;
-
-namespace KitchenDeliverySystem.Domain.UnitOfWork
+﻿namespace KitchenDeliverySystem.Domain.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

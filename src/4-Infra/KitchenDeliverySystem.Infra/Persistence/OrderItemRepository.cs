@@ -8,6 +8,7 @@ namespace KitchenDeliverySystem.Infra.Persistence
     {
         public OrderItemRepository(AppDbContext context) : base(context)
         {
+
         }
     }
 }

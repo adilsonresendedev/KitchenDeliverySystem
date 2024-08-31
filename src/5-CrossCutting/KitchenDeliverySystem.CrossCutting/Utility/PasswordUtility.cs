@@ -26,10 +26,10 @@ namespace KitchenDeliverySystem.CrossCutting.Utility
         {
             using (var hmacsha = new HMACSHA512(passwordSalt))
             {
-                var hashCalculado = hmacsha.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < hashCalculado.Length; i++)
+                var calculatedHash = hmacsha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < calculatedHash.Length; i++)
                 {
-                    if (hashCalculado[i] != passwordHash[i])
+                    if (calculatedHash[i] != passwordHash[i])
                     {
                         return false;
                     }

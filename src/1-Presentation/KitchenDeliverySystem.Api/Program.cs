@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSettings(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+builder.Services.AddAutoMapper();
 builder.Services.AddUseCases();
 builder.Services.AddRepositories();
 builder.Services.AddDataBase(builder.Configuration);

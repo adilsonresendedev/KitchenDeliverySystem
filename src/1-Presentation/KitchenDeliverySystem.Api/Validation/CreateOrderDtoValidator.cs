@@ -11,9 +11,6 @@ namespace KitchenDeliverySystem.Api.Validation
             RuleFor(order => order.CustomerName)
                 .NotEmpty().WithMessage(ValidationConstants.CustomerNameIsInvalid)
                 .MaximumLength(30).WithMessage(ValidationConstants.CustomerNameTooLong);
-
-            RuleFor(order => order.OrderStatus)
-                .IsInEnum().WithMessage(ValidationConstants.OrderStatusIsInvalid);
         }
     }
 }

@@ -11,19 +11,18 @@ namespace KitchenDeliverySystem.Domain.Entities
 
         protected Order() { }
 
-        public Order(string customerName, OrderStatus orderStatus)
+        public Order(string customerName)
         {          
             OrderTime = DateTime.UtcNow;
             CustomerName = customerName;
-            OrderStatus = orderStatus;
+            OrderStatus = OrderStatus.Pending;
             Items = new List<OrderItem>();
         }
 
-        public void Update(string customerName, List<OrderItem> items, OrderStatus orderStatus)
+        public void Update(string customerName, OrderStatus orderStatus)
         {
             CustomerName = customerName;
             OrderStatus = orderStatus;
-            Items = items;
         }
 
         public void AddItem(OrderItem orderItem)

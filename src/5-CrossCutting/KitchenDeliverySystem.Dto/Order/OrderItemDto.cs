@@ -1,7 +1,12 @@
-﻿namespace KitchenDeliverySystem.Dto.Order
+﻿using KitchenDeliverySystem.Dto.Base;
+
+namespace KitchenDeliverySystem.Dto.Order
 {
-    public class OrderItemDto : CreateOderDto
+    public class OrderItemDto : BaseDto
     {
-        public int Id { get; set; }
+        public string Name { get; private set; }
+        public decimal Quantity { get; private set; }
+        public string Notes { get; private set; }
+
     }
 }

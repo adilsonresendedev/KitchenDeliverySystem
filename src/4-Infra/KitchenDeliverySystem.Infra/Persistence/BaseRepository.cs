@@ -13,7 +13,7 @@ namespace KitchenDeliverySystem.Infra.Persistence
             _context = context;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -28,14 +28,20 @@ namespace KitchenDeliverySystem.Infra.Persistence
             await _context.Set<T>().AddAsync(entity);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+            await Task.Run(() =>
+            {
+                _context.Set<T>().Update(entity);
+            });
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            await Task.Run(() =>
+            {
+                _context.Set<T>().Remove(entity);
+            });
         }
     }
 }

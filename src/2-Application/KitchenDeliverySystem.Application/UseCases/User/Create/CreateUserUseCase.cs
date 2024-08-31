@@ -40,8 +40,6 @@ namespace KitchenDeliverySystem.Application.UseCases.User.UserInsert
                 passwordHashDto.PasswordSalt);
 
             await _userRepository.AddAsync(user);
-
-            await _unitOfWork.SaveChangesAsync();
             await _unitOfWork.CommitAsync();
 
             return _mapper.Map<UserDto>(user);
