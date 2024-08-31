@@ -28,7 +28,7 @@ namespace KitchenDeliverySystem.Infra.Persistence
             await _context.Set<T>().AddAsync(entity);
         }
 
-        public async Task Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             await Task.Run(() =>
             {
@@ -36,7 +36,7 @@ namespace KitchenDeliverySystem.Infra.Persistence
             });
         }
 
-        public async Task Delete(T entity)
+        public async Task DeleteAsync(T entity)
         {
             await Task.Run(() =>
             {

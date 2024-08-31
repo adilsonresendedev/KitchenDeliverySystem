@@ -33,7 +33,7 @@ namespace KitchenDeliverySystem.Application.UseCases.Order.OrderUpdate
                 inbound.CustomerName,
                 inbound.OrderStatus);
 
-            await _orderRepository.Update(existingOrder);
+            await _orderRepository.UpdateAsync(existingOrder);
             await _unitOfWork.CommitAsync();
 
             return _mapper.Map<OrderDto>(existingOrder);

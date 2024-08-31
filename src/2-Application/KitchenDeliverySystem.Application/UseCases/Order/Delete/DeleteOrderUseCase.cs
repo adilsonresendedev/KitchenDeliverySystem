@@ -27,7 +27,7 @@ namespace KitchenDeliverySystem.Application.UseCases.Order.OrderDelete
             if (existingOrder.Items is not null && existingOrder.Items.Count > 0)
                 return ErrorCatalog.OrderCantDeleteHasItems;
 
-            await _orderRepository.Delete(existingOrder);
+            await _orderRepository.DeleteAsync(existingOrder);
             await _unitOfWork.CommitAsync();
 
             return new Success();
