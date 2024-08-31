@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Git\KitchenDeliverySystem\src\2 - Application\KitchenDeliverySystem.Application\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Git\KitchenDeliverySystem\src\2 - Application\KitchenDeliverySystem.Application\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\OrderItem\OrderItemDelete\" />
+    <Folder Include="UseCases\OrderItem\OrderItemCreate\" />
+    <Folder Include="UseCases\Order\OrderSearch\" />
+    <Folder Include="UseCases\Order\OrderGet\" />
+    <Folder Include="UseCases\Order\OrderUpdate\" />
+    <Folder Include="UseCases\Order\OrderDelete\" />
+    <Folder Include="UseCases\Order\OrderCreate\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\4-Infra\KitchenDeliverySystem.Infra\KitchenDeliverySystem.Infra.csproj" />
+    <ProjectReference Include="..\..\5-CrossCutting\KitchenDeliverySystem.CrossCutting\KitchenDeliverySystem.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\5-CrossCutting\KitchenDeliverySystem.Dto\KitchenDeliverySystem.Dto.csproj" />
+  </ItemGroup>
+
+</Project>
