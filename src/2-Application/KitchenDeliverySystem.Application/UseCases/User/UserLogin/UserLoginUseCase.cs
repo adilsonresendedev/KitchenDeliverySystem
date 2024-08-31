@@ -1,23 +1,23 @@
 ﻿using ErrorOr;
 using KitchenDeliverySystem.CrossCutting.ErrorCatalog;
+using KitchenDeliverySystem.CrossCutting.Options;
 using KitchenDeliverySystem.CrossCutting.Utility;
 using KitchenDeliverySystem.Domain.Repositories;
-using KitchenDeliverySystem.Domain.UnitOfWork;
 using KitchenDeliverySystem.Dto.User;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace KitchenDeliverySystem.Application.UseCases.User.UserLogin
 {
     public class UserLoginUseCase : IUserLoginUseCase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
 
         public UserLoginUseCase(
-            IUserRepository userRepository,
-            IConfiguration configuration)
+        IUserRepository userRepository,
+            IOptions<AppSettings> appSettings)
         {
-            _configuration = configuration;
+            _appSettings = appSettings.Value;
             _userRepository = userRepository;
         }
 
@@ -26,10 +26,10 @@ namespace KitchenDeliverySystem.Application.UseCases.User.UserLogin
             var user = await _userRepository.GetByUsernameAsync(inbound.UserName);
             if (user is null)
                 return ErrorCatalog.UserNotFound;
-            else if (PasswordUtility.CheckHash(inbound.Password, user.PasswordHash, user.PasswordSalt))
+            else if (!PasswordUtility.CheckHash(inbound.Password, user.PasswordHash, user.PasswordSalt))
                 return ErrorCatalog.UserInvalidPassword;
 
-            var token = PasswordUtility.CreateToken(user, _configuration.GetSection("AppSettings:TokenKey").Value);
+            var token = PasswordUtility.CreateToken(user, _appSettings.TokenKey);
 
             return token;
         } 

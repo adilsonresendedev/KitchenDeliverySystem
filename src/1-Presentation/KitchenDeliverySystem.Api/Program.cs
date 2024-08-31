@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSettings(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 builder.Services.AddUseCases();
 builder.Services.AddRepositories();

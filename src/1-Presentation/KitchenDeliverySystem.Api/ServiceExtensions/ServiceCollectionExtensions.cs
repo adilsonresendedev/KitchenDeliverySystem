@@ -1,12 +1,14 @@
 ﻿using KitchenDeliverySystem.Application.UseCases;
 using KitchenDeliverySystem.Application.UseCases.User.UserInsert;
 using KitchenDeliverySystem.Application.UseCases.User.UserLogin;
+using KitchenDeliverySystem.CrossCutting.Options;
 using KitchenDeliverySystem.Domain.Repositories;
 using KitchenDeliverySystem.Domain.UnitOfWork;
 using KitchenDeliverySystem.Infra.Context;
 using KitchenDeliverySystem.Infra.Persistence;
 using KitchenDeliverySystem.Infra.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KitchenDeliverySystem.Api.ServiceExtensions
 {
@@ -39,6 +41,12 @@ namespace KitchenDeliverySystem.Api.ServiceExtensions
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            return services;
+        }
+
+        public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<AppSettings>(configuration);
             return services;
         }
     }

@@ -35,7 +35,7 @@ namespace KitchenDeliverySystem.Api.Controllers
                 var error = result.Errors.FirstOrDefault();
                 return UnprocessableEntity(error);
             }
-            return Ok(result);
+            return Ok(result.Value);
 
         }
 
