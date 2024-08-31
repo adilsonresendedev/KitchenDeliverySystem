@@ -44,6 +44,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandlingMiddleware();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

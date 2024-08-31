@@ -1,4 +1,5 @@
-﻿using KitchenDeliverySystem.Application.UseCases;
+﻿using KitchenDeliverySystem.API.Midlewares;
+using KitchenDeliverySystem.Application.UseCases;
 using KitchenDeliverySystem.Application.UseCases.Order.OrderCreate;
 using KitchenDeliverySystem.Application.UseCases.Order.OrderDelete;
 using KitchenDeliverySystem.Application.UseCases.Order.OrderGet;
@@ -112,5 +113,11 @@ namespace KitchenDeliverySystem.Api.ServiceExtensions
 
             return services;
         }
+
+        public static IApplicationBuilder UseExceptionHandlingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
+
     }
 }
