@@ -18,12 +18,15 @@ namespace KitchenDeliverySystem.Api.Controllers.Base
                     }
                     else if (error.Type == ErrorType.Validation)
                     {
-                        return BadRequest(error.Description);
+                        return UnprocessableEntity(error.Description);
                     }
                 }
                 return StatusCode(500, "An unexpected error occurred.");
             }
-
+            if (!result.IsError && result.Value is null)
+            {
+                return NoContent();
+            }
             return Ok(result.Value);
         }
     }

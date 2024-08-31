@@ -1,6 +1,5 @@
 using KitchenDeliverySystem.Api.ServiceExtensions;
 using KitchenDeliverySystem.Infra.Context;
-using KitchenDeliverySystem.Infra.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
