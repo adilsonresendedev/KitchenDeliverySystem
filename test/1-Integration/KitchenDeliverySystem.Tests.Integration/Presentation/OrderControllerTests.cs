@@ -10,6 +10,7 @@ using KitchenDeliverySystem.Application.UseCases.OrderItem.Get;
 using KitchenDeliverySystem.Application.UseCases.OrderItem.OrderItemCreate;
 using KitchenDeliverySystem.Application.UseCases.OrderItem.OrderItemDelete;
 using KitchenDeliverySystem.Application.UseCases.OrderItem.Update;
+using KitchenDeliverySystem.CrossCutting.ErrorCatalog;
 using KitchenDeliverySystem.Domain.Enums;
 using KitchenDeliverySystem.Dto.Order;
 using KitchenDeliverySystem.Dto.Pagination;
@@ -113,7 +114,45 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
         }
 
         [Fact]
+        public async Task GetOrders_NoOrdersFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderFilterDto = new OrderFilterDto();
+            var pagedResult = new PagedResultDto<OrderDto>
+            {
+                Data = new List<OrderDto>(),
+                PageNumber = 1,
+                PageSize = 10,
+                Total = 0
+            };
+            _mockSearchOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<OrderFilterDto>()))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.GetOrders(orderFilterDto);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async Task GetOrderById_ReturnsOkResult()
+        {
+            // Arrange
+            var orderId = 1;
+            var order = _orderFaker.Generate();
+            _mockGetOrderUseCase.Setup(x => x.ExecuteAsync(orderId))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.GetOrderById(orderId);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetOrderById_NoOrderFound_ReturnsNotFoundResult()
         {
             // Arrange
             var orderId = 1;
@@ -143,9 +182,28 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             var result = await _controller.CreateOrder(createOrderDto);
 
             // Assert
-            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var createdResult = Assert.IsType<CreatedResult>(result.Result);
             Assert.IsType<OrderDto>(createdResult.Value);
             _mockCreateOrderUseCase.Verify(x => x.ExecuteAsync(It.IsAny<CreateOderDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateOrder_InvalidData_ReturnsUnprocessableEntity()
+        {
+            // Arrange
+            var createOrderDto = _createOrderFaker.Clone()
+                .RuleFor(x => x.CustomerName, x => string.Empty)
+                .Generate();
+
+            var createdOrder = _orderFaker.Generate();
+            _mockCreateOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateOderDto>()))
+                .ReturnsAsync(createdOrder);
+
+            // Act
+            var result = await _controller.CreateOrder(createOrderDto);
+
+            // Assert
+            var unprocessableEntityResult = Assert.IsType<UnprocessableEntityObjectResult>(result.Result);
         }
 
         [Fact]
@@ -168,6 +226,25 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
         }
 
         [Fact]
+        public async Task UpdateOrder_InvalidData_ReturnsUnprocessableEntity()
+        {
+            // Arrange
+            var orderId = 1;
+            var updateOrderDto = _updateOrderFaker.Clone()
+                .RuleFor(x => x.CustomerName, string.Empty);
+
+            var updatedOrder = _orderFaker.Generate();
+            _mockUpdateOrderUseCase.Setup(x => x.ExecuteAsync(orderId, It.IsAny<UpdateOrderDto>()))
+                .ReturnsAsync(updatedOrder);
+
+            // Act
+            var result = await _controller.UpdateOrder(orderId, updateOrderDto);
+
+            // Assert
+            var unprocessableEntityResult = Assert.IsType<UnprocessableEntityObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async Task DeleteOrder_ReturnsOkResult()
         {
             // Arrange
@@ -179,8 +256,23 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             var result = await _controller.DeleteOrder(orderId);
 
             // Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
             _mockDeleteOrderUseCase.Verify(x => x.ExecuteAsync(orderId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteOrder_OrderNotFoun_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            _mockDeleteOrderUseCase.Setup(x => x.ExecuteAsync(orderId))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.DeleteOrder(orderId);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
@@ -202,6 +294,36 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
         }
 
         [Fact]
+        public async Task GetOrderItems_OrderNotFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            _mockGetOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.GetOrderItems(orderId);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetOrderItems_OrderItemsNotFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            _mockGetOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId))
+                .ReturnsAsync(ErrorCatalog.OrderItemsNotFound);
+
+            // Act
+            var result = await _controller.GetOrderItems(orderId);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async Task AddOrderItem_ReturnsOkResult()
         {
             // Arrange
@@ -218,6 +340,44 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.IsType<OrderItemDto>(okResult.Value);
             _mockCreateOrderItemUseCase.Verify(x => x.ExecuteAsync(orderId, It.IsAny<CreateOrderItemDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task AddOrderItem_InvalidData_ReturnsUnprocessableEntity()
+        {
+            // Arrange
+            var orderId = 1;
+            var createOrderItemDto = _createOrderItemFaker.Clone()
+                .RuleFor(x => x.Quantity, 0);
+
+            var createdOrderItem = _orderItemFaker.Generate();
+            _mockCreateOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, It.IsAny<CreateOrderItemDto>()))
+                .ReturnsAsync(createdOrderItem);
+
+            // Act
+            var result = await _controller.AddOrderItem(orderId, createOrderItemDto);
+
+            // Assert
+            var unprocessableEntityResult = Assert.IsType<UnprocessableEntityObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task AddOrderItem_OrderNotFound_ReturnsUnprocessableEntity()
+        {
+            // Arrange
+            var orderId = 1;
+            var createOrderItemDto = _createOrderItemFaker.Clone()
+                .RuleFor(x => x.Quantity, 0);
+
+            var createdOrderItem = _orderItemFaker.Generate();
+            _mockCreateOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, It.IsAny<CreateOrderItemDto>()))
+                .ReturnsAsync(createdOrderItem);
+
+            // Act
+            var result = await _controller.AddOrderItem(orderId, createOrderItemDto);
+
+            // Assert
+            var unprocessableEntityResult = Assert.IsType<UnprocessableEntityObjectResult>(result.Result);
         }
 
         [Fact]
@@ -241,6 +401,45 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
         }
 
         [Fact]
+        public async Task UpdateOrderItem_InvalidData_ReturnsUnprocessableEntity()
+        {
+            // Arrange
+            var orderId = 1;
+            var itemId = 1;
+            var updateOrderItemDto = _updateOrderItemFaker.Clone()
+                .RuleFor(x => x.Quantity, 0);
+
+            var updatedOrderItem = _orderItemFaker.Generate();
+            _mockUpdateOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, itemId, It.IsAny<UpdateOrderItemDto>()))
+                .ReturnsAsync(updatedOrderItem);
+
+            // Act
+            var result = await _controller.UpdateOrderItem(orderId, itemId, updateOrderItemDto);
+
+            // Assert
+            var unprocessableEntityResult = Assert.IsType<UnprocessableEntityObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task UpdateOrderItem_OrderNotFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            var itemId = 1;
+            var updateOrderItemDto = _updateOrderItemFaker.Generate();
+
+            var updatedOrderItem = _orderItemFaker.Generate();
+            _mockUpdateOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, itemId, It.IsAny<UpdateOrderItemDto>()))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.UpdateOrderItem(orderId, itemId, updateOrderItemDto);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async Task DeleteOrderItem_ReturnsOkResult()
         {
             // Arrange
@@ -253,8 +452,40 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             var result = await _controller.DeleteOrderItem(orderId, itemId);
 
             // Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
             _mockDeleteOrderItemUseCase.Verify(x => x.ExecuteAsync(orderId, itemId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteOrderItem_OrderNotFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            var itemId = 1;
+            _mockDeleteOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, itemId))
+                .ReturnsAsync(ErrorCatalog.OrderNotFound);
+
+            // Act
+            var result = await _controller.DeleteOrderItem(orderId, itemId);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteOrderItem_OrderItemNotFound_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var orderId = 1;
+            var itemId = 1;
+            _mockDeleteOrderItemUseCase.Setup(x => x.ExecuteAsync(orderId, itemId))
+                .ReturnsAsync(ErrorCatalog.OrderItemNotFound);
+
+            // Act
+            var result = await _controller.DeleteOrderItem(orderId, itemId);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
     }
 }

@@ -84,7 +84,8 @@ namespace KitchenDeliverySystem.Api.Controllers
                 return UnprocessableEntity(validationResult);
 
             var result = await _createOrderUseCase.ExecuteAsync(inbound);
-            return HandleErrorOrResult(result);
+            
+            return HandleErrorOrResult(result, $"/order/{result.Value.Id}");
         }
 
         [HttpPut("{id:int}")]
