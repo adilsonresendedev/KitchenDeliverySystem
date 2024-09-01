@@ -32,7 +32,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
         private readonly Mock<IGetOrderItemUseCase> _mockGetOrderItemUseCase;
         private readonly OrdersController _controller;
         private readonly Faker<OrderDto> _orderFaker;
-        private readonly Faker<CreateOderDto> _createOrderFaker;
+        private readonly Faker<CreateOrderDto> _createOrderFaker;
         private readonly Faker<UpdateOrderDto> _updateOrderFaker;
         private readonly Faker<OrderItemDto> _orderItemFaker;
         private readonly Faker<CreateOrderItemDto> _createOrderItemFaker;
@@ -66,7 +66,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
                 .RuleFor(o => o.OrderTime, f => f.Date.Recent())
                 .RuleFor(o => o.OrderStatus, f => f.PickRandom<OrderStatus>());
 
-            _createOrderFaker = new Faker<CreateOderDto>()
+            _createOrderFaker = new Faker<CreateOrderDto>()
                 .RuleFor(o => o.CustomerName, f => f.Name.FullName());
 
             _updateOrderFaker = new Faker<UpdateOrderDto>()
@@ -175,7 +175,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             // Arrange
             var createOrderDto = _createOrderFaker.Generate();
             var createdOrder = _orderFaker.Generate();
-            _mockCreateOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateOderDto>()))
+            _mockCreateOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateOrderDto>()))
                 .ReturnsAsync(createdOrder);
 
             // Act
@@ -184,7 +184,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             // Assert
             var createdResult = Assert.IsType<CreatedResult>(result.Result);
             Assert.IsType<OrderDto>(createdResult.Value);
-            _mockCreateOrderUseCase.Verify(x => x.ExecuteAsync(It.IsAny<CreateOderDto>()), Times.Once);
+            _mockCreateOrderUseCase.Verify(x => x.ExecuteAsync(It.IsAny<CreateOrderDto>()), Times.Once);
         }
 
         [Fact]
@@ -196,7 +196,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
                 .Generate();
 
             var createdOrder = _orderFaker.Generate();
-            _mockCreateOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateOderDto>()))
+            _mockCreateOrderUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateOrderDto>()))
                 .ReturnsAsync(createdOrder);
 
             // Act

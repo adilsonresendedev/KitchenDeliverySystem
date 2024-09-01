@@ -5,6 +5,6 @@ namespace KitchenDeliverySystem.Application.UseCases.Order.OrderCreate
 {
     public interface ICreateOrderUseCase
     { 
-        Task<ErrorOr<OrderDto>> ExecuteAsync(CreateOderDto inbound);
+        Task<ErrorOr<OrderDto>> ExecuteAsync(CreateOrderDto inbound);
     }
 }

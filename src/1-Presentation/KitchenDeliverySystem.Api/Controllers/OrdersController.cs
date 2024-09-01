@@ -76,7 +76,7 @@ namespace KitchenDeliverySystem.Api.Controllers
         [ProducesResponseType(typeof(OrderDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] CreateOderDto inbound)
+        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] CreateOrderDto inbound)
         {
             var createOrderValidator = new CreateOrderDtoValidator();
             var validationResult = createOrderValidator.Validate(inbound);

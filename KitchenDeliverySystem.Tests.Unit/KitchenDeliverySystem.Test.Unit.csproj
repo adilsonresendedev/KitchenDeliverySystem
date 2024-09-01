@@ -26,9 +26,10 @@
 
   <ItemGroup>
     <Folder Include="Application\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Infra\" />
-    <Folder Include="Presentation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\1-Presentation\KitchenDeliverySystem.Api\KitchenDeliverySystem.Api.csproj" />
   </ItemGroup>
 
 </Project>

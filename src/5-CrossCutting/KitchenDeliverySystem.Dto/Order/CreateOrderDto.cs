@@ -2,7 +2,7 @@
 
 namespace KitchenDeliverySystem.Dto.Order
 {
-    public class CreateOderDto
+    public class CreateOrderDto
     {
         public string CustomerName { get; set; }
     }

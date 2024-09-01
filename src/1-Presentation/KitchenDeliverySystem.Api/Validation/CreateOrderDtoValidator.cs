@@ -4,7 +4,7 @@ using KitchenDeliverySystem.Dto.Order;
 
 namespace KitchenDeliverySystem.Api.Validation
 {
-    public class CreateOrderDtoValidator : AbstractValidator<CreateOderDto>
+    public class CreateOrderDtoValidator : AbstractValidator<CreateOrderDto>
     {
         public CreateOrderDtoValidator()
         {

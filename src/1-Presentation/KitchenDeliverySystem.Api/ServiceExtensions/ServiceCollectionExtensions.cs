@@ -20,9 +20,11 @@ using KitchenDeliverySystem.Infra.Persistence;
 using KitchenDeliverySystem.Infra.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KitchenDeliverySystem.Api.ServiceExtensions
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddUseCases(this IServiceCollection services)

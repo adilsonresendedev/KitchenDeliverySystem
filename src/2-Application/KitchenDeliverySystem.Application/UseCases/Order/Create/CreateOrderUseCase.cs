@@ -22,7 +22,7 @@ namespace KitchenDeliverySystem.Application.UseCases.Order.OrderCreate
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ErrorOr<OrderDto>> ExecuteAsync(CreateOderDto inbound)
+        public async Task<ErrorOr<OrderDto>> ExecuteAsync(CreateOrderDto inbound)
         {
             var order = new Domain.Entities.Order
             (

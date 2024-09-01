@@ -2,7 +2,7 @@
 
 namespace KitchenDeliverySystem.Dto.Order
 {
-    public class UpdateOrderDto : CreateOderDto
+    public class UpdateOrderDto : CreateOrderDto
     {
         public OrderStatus OrderStatus { get; set; }
     }

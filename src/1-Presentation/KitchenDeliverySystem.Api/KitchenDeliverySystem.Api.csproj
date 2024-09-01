@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<ExcludeFromCodeCoverage>Program.cs</ExcludeFromCodeCoverage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +23,5 @@
     <ProjectReference Include="..\..\5-CrossCutting\KitchenDeliverySystem.CrossCutting\KitchenDeliverySystem.CrossCutting.csproj" />
     <ProjectReference Include="..\..\5-CrossCutting\KitchenDeliverySystem.Dto\KitchenDeliverySystem.Dto.csproj" />
   </ItemGroup>
-
+	
 </Project>
