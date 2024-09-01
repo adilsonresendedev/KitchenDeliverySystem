@@ -27,7 +27,7 @@ namespace KitchenDeliverySystem.Application.UseCases.User.UserInsert
         {
             var userInDatabase = await _userRepository.GetByUsernameAsync(inbound.UserName);
             if (userInDatabase != null)
-                return ErrorCatalog.UserAlterdyExists;
+                return ErrorCatalog.UserAlreadyExists;
 
             var passwordHashDto = PasswordUtility.CreatePasswordHash(inbound.Password);
 

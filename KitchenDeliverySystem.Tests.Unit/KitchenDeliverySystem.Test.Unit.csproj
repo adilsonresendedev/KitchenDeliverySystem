@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.0" />
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.4.2" />
@@ -25,11 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\src\1-Presentation\KitchenDeliverySystem.Api\KitchenDeliverySystem.Api.csproj" />
+    <ProjectReference Include="..\src\3-Domain\KitchenDeliverySystem.Domain\KitchenDeliverySystem.Domain.csproj" />
   </ItemGroup>
 
 </Project>

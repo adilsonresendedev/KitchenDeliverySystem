@@ -73,7 +73,7 @@ namespace KitchenDeliverySystem.Test.Integration.Presentation
             // Arrange
             var createUserDto = _createUserFaker.Generate();
             _mockCreateUserUseCase.Setup(x => x.ExecuteAsync(It.IsAny<CreateUserDto>()))
-                .ReturnsAsync(ErrorCatalog.UserAlterdyExists);
+                .ReturnsAsync(ErrorCatalog.UserAlreadyExists);
 
             // Act
             var result = await _controller.Register(createUserDto);

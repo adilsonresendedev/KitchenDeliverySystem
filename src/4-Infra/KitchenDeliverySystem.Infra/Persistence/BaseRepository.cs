@@ -1,9 +1,11 @@
 ﻿using KitchenDeliverySystem.Domain.Repositories;
 using KitchenDeliverySystem.Infra.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KitchenDeliverySystem.Infra.Persistence
 {
+    [ExcludeFromCodeCoverage]
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected readonly AppDbContext _context;

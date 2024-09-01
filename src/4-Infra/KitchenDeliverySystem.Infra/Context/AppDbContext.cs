@@ -1,8 +1,10 @@
 ﻿using KitchenDeliverySystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KitchenDeliverySystem.Infra.Context
 {
+    [ExcludeFromCodeCoverage]
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)

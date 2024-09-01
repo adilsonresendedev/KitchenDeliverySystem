@@ -1,4 +1,5 @@
-﻿namespace KitchenDeliverySystem.Domain.Entities
+﻿
+namespace KitchenDeliverySystem.Domain.Entities
 {
     public class OrderItem : BaseEntity
     {
@@ -21,6 +22,11 @@
             Name = name;
             Quantity = quantity;
             Notes = notes;
+        }
+
+        public object Should()
+        {
+            throw new NotImplementedException();
         }
     }
 }
