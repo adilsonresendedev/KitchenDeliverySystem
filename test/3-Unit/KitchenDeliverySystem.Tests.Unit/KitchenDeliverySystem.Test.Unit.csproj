@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\1-Presentation\KitchenDeliverySystem.Api\KitchenDeliverySystem.Api.csproj" />
-    <ProjectReference Include="..\src\3-Domain\KitchenDeliverySystem.Domain\KitchenDeliverySystem.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\1-Presentation\KitchenDeliverySystem.Api\KitchenDeliverySystem.Api.csproj" />
+    <ProjectReference Include="..\..\..\src\3-Domain\KitchenDeliverySystem.Domain\KitchenDeliverySystem.Domain.csproj" />
   </ItemGroup>
 
 </Project>
